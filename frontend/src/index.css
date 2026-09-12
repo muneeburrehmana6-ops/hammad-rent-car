@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-cream text-asphalt font-body antialiased;
+}
+
+.container-x {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center bg-amber hover:bg-amber-dark text-asphalt font-semibold px-5 py-3 rounded-md transition-colors;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center border border-asphalt/20 hover:border-asphalt text-asphalt font-semibold px-5 py-3 rounded-md transition-colors;
+}
+
+.input-field {
+  @apply w-full border border-asphalt/20 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-amber;
+}
+
+.card {
+  @apply bg-white rounded-lg border border-asphalt/10;
+}
