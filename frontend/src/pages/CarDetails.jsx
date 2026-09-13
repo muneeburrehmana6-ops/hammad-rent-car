@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import ReviewList from "../components/ReviewList";
+import { toUSD } from "../constants/currency";
 
 const CarDetails = () => {
   const { id } = useParams();
@@ -65,8 +66,11 @@ const CarDetails = () => {
             <p className="text-amber-dark mt-2">★ {car.ratingAverage.toFixed(1)} ({car.ratingCount} reviews)</p>
           )}
 
-          <p className="font-display text-3xl mt-4">
-            ${car.pricePerDay}<span className="text-sm font-body font-normal text-asphalt/60">/day</span>
+                    <p className="font-display text-3xl mt-4">
+            ${toUSD(car.pricePerDay)}<span className="text-sm font-body font-normal text-asphalt/60">/day</span>
+          </p>
+          <p className="text-sm text-asphalt/50 -mt-1">
+            Rs {car.pricePerDay.toLocaleString("en-PK")}/day
           </p>
 
           <div className="grid grid-cols-2 gap-3 mt-6 text-sm">

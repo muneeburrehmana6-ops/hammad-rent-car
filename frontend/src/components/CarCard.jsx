@@ -1,6 +1,7 @@
 // components/CarCard.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import { toUSD } from "../constants/currency";
 
 const CarCard = ({ car }) => {
   const image = car.images?.[0] || "https://placehold.co/600x400?text=Car+Image";
@@ -34,9 +35,9 @@ const CarCard = ({ car }) => {
         </p>
         <p className="text-sm text-asphalt/60">{car.location?.city}{car.location?.country ? `, ${car.location.country}` : ""}</p>
                <div className="mt-3 flex items-center justify-between">
-          <div>
+                    <div>
             <p className="font-display text-lg">
-              ${car.pricePerDay}
+              ${toUSD(car.pricePerDay)}
               <span className="text-xs font-body font-normal text-asphalt/60">/day</span>
             </p>
             <p className="text-xs text-asphalt/50">
