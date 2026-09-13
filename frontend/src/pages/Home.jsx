@@ -1,5 +1,5 @@
 // pages/Home.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import api from "../api/axios";
@@ -15,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [featuredCars, setFeaturedCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchFeatured = async () => {
@@ -28,6 +29,13 @@ const Home = () => {
       }
     };
     fetchFeatured();
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
   }, []);
 
   const handleSearch = (filters) => {
@@ -50,6 +58,7 @@ const Home = () => {
       {/* Hero with background video */}
       <section className="relative overflow-hidden">
         <video
+          ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
           src={HERO_VIDEO_URL}
           poster={HERO_POSTER}
