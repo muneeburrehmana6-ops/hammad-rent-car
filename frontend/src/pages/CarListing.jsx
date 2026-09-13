@@ -18,7 +18,7 @@ const CarListing = () => {
   const fetchCars = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await api.get("/cars", { params: { ...currentFilters, page } });
+            const { data } = await api.get("/cars", { params: { ...currentFilters, page, limit: 24 } });
       setCars(data.cars);
       setPages(data.pages || 1);
     } catch (err) {

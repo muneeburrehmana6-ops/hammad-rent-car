@@ -33,11 +33,16 @@ const CarCard = ({ car }) => {
           {car.category} · {car.transmission} · {car.seats} seats
         </p>
         <p className="text-sm text-asphalt/60">{car.location?.city}{car.location?.country ? `, ${car.location.country}` : ""}</p>
-        <div className="mt-3 flex items-center justify-between">
-          <p className="font-display text-lg">
-            ${car.pricePerDay}
-            <span className="text-xs font-body font-normal text-asphalt/60">/day</span>
-          </p>
+               <div className="mt-3 flex items-center justify-between">
+          <div>
+            <p className="font-display text-lg">
+              ${car.pricePerDay}
+              <span className="text-xs font-body font-normal text-asphalt/60">/day</span>
+            </p>
+            <p className="text-xs text-asphalt/50">
+              Rs {car.pricePerDay.toLocaleString("en-PK")}/day
+            </p>
+          </div>
           <span className="text-xs text-teal font-medium">View details →</span>
         </div>
       </div>

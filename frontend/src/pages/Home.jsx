@@ -19,7 +19,7 @@ const Home = () => {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const { data } = await api.get("/cars", { params: { limit: 20 } });
+        const { data } = await api.get("/cars", { params: { limit: 150 } });
         setFeaturedCars(data.cars);
       } catch (err) {
         console.error(err);
