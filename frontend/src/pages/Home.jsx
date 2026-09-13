@@ -55,20 +55,22 @@ const Home = () => {
         />
       </Helmet>
 
-      {/* Hero with background video */}
-      <section className="relative overflow-hidden">
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          src={HERO_VIDEO_URL}
-          poster={HERO_POSTER}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-        {/* Dark gradient overlay for readability + luxury feel */}
-        <div className="absolute inset-0 bg-gradient-to-b from-asphalt/90 via-asphalt/80 to-asphalt" />
+            {/* Hero with background video */}
+      <section className="relative overflow-hidden bg-asphalt">
+        <div className="absolute inset-0 h-[420px] md:h-full">
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            src={HERO_VIDEO_URL}
+            poster={HERO_POSTER}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+          {/* Dark gradient overlay for readability + luxury feel */}
+          <div className="absolute inset-0 bg-gradient-to-b from-asphalt/90 via-asphalt/80 to-asphalt" />
+        </div>
 
         <div className="relative container-x py-20 md:py-32 grid md:grid-cols-2 gap-10 items-center">
           <div className="text-cream">
