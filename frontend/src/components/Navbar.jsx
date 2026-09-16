@@ -14,15 +14,26 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/about", label: "About Us" },
+    { to: "/cars", label: "Fleet" },
+    { to: "/contact", label: "Contact Us" },
+  ];
+
   return (
     <header className="bg-asphalt text-cream sticky top-0 z-50">
       <div className="container-x flex items-center justify-between h-16">
-        <Link to="/" className="font-display text-lg tracking-tight text-amber">
-          HAMMAD RENT CAR
+        <Link to="/" className="flex items-center shrink-0">
+          <img src="/logo.png" alt="Hammad Motors and Rent A Car Pakistan" className="h-11 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link to="/cars" className="hover:text-amber transition-colors">Cars</Link>
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to} className="hover:text-amber transition-colors">
+              {link.label}
+            </Link>
+          ))}
           {user && <Link to="/profile" className="hover:text-amber transition-colors">My Bookings</Link>}
           {isAdmin && <Link to="/admin" className="hover:text-amber transition-colors">Admin</Link>}
         </nav>
@@ -53,7 +64,11 @@ const Navbar = () => {
 
       {open && (
         <div className="md:hidden border-t border-cream/10 px-4 py-4 space-y-3">
-          <Link to="/cars" onClick={() => setOpen(false)} className="block">Cars</Link>
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to} onClick={() => setOpen(false)} className="block">
+              {link.label}
+            </Link>
+          ))}
           {user && <Link to="/profile" onClick={() => setOpen(false)} className="block">My Bookings</Link>}
           {isAdmin && <Link to="/admin" onClick={() => setOpen(false)} className="block">Admin</Link>}
           {user ? (
