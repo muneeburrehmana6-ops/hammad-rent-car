@@ -25,6 +25,16 @@ const HERO_SLIDES = [
   },
 ];
 
+// Category filter bar shown above the fleet — maps to the Car model's `category` field.
+const FLEET_CATEGORIES = [
+  { label: "All Cars", values: [] },
+  { label: "Budget Cars", values: ["Economy", "Hatchback"] },
+  { label: "Standard Car", values: ["Sedan"] },
+  { label: "Luxury Cars", values: ["Luxury"] },
+  { label: "Van", values: ["Van"] },
+  { label: "Convertible Cars", values: ["Convertible"] },
+];
+
 const STEPS = [
   {
     icon: "📍",
@@ -59,11 +69,12 @@ const Home = () => {
   const videoRef = useRef(null);
   const [slideIndex, setSlideIndex] = useState(0);
   const [openStep, setOpenStep] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(0);
 
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const { data } = await api.get("/cars", { params: { limit: 150 } });
+        const { data } = await api.get("/cars", { params: { limit: 30 } });
         setFeaturedCars(data.cars);
       } catch (err) {
         console.error(err);
@@ -91,6 +102,11 @@ const Home = () => {
 
   const slide = HERO_SLIDES[slideIndex];
 
+  const activeValues = FLEET_CATEGORIES[activeCategory].values;
+  const visibleCars = activeValues.length
+    ? featuredCars.filter((c) => activeValues.includes(c.category))
+    : featuredCars;
+
   return (
     <div>
       <Helmet>
@@ -113,6 +129,7 @@ const Home = () => {
             muted
             loop
             playsInline
+            preload="auto"
           />
           {/* Dark gradient overlay for readability + luxury feel */}
           <div className="absolute inset-0 bg-gradient-to-b from-asphalt/90 via-asphalt/80 to-asphalt" />
@@ -120,7 +137,9 @@ const Home = () => {
 
         <div className="relative container-x py-16 md:py-28">
           <div className="text-cream max-w-2xl">
-            <img src="/logo.png" alt="Hammad Motors logo" className="h-14 md:h-16 mb-5 object-contain" />
+            <span className="inline-block font-display text-2xl md:text-3xl text-amber mb-5">
+              HAMMAD MOTORS
+            </span>
 
             <div key={slideIndex} className="animate-fadeInUp">
               <span className="inline-block text-amber text-xs font-semibold tracking-widest uppercase mb-3">
@@ -218,6 +237,25 @@ const Home = () => {
         </div>
       </Reveal>
 
+      {/* Category filter navbar — click a category to filter the fleet below */}
+      <div className="bg-white border-y border-asphalt/10 sticky top-16 z-40">
+        <div className="container-x flex flex-wrap gap-1 py-2">
+          {FLEET_CATEGORIES.map((cat, i) => (
+            <button
+              key={cat.label}
+              onClick={() => setActiveCategory(i)}
+              className={`text-sm font-medium px-4 py-2 rounded-md transition-colors ${
+                activeCategory === i
+                  ? "bg-asphalt text-cream"
+                  : "text-asphalt/70 hover:bg-asphalt/5"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Featured cars pulled straight from the database */}
       <Reveal as="section" className="container-x py-16">
         <div className="flex items-end justify-between mb-8">
@@ -232,13 +270,15 @@ const Home = () => {
 
         {loading ? (
           <p className="text-asphalt/60">Loading cars...</p>
-        ) : featuredCars.length === 0 ? (
+        ) : visibleCars.length === 0 ? (
           <div className="card p-10 text-center text-asphalt/60">
-            No cars listed yet. Once an admin adds cars, they'll appear here automatically.
+            {featuredCars.length === 0
+              ? "No cars listed yet. Once an admin adds cars, they'll appear here automatically."
+              : "No cars in this category yet — try another category above."}
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredCars.map((car, i) => (
+            {visibleCars.map((car, i) => (
               <Reveal key={car._id} delay={i * 60}>
                 <CarCard car={car} />
               </Reveal>
@@ -263,6 +303,50 @@ const Home = () => {
               <span className="text-xs text-teal font-medium mt-1 inline-block">Learn more →</span>
             </Link>
           ))}
+        </div>
+      </Reveal>
+
+      {/* Don't Dream It, Drive It — CTA with accepted payment methods */}
+      <Reveal as="section" className="bg-asphalt text-cream py-16">
+        <div className="container-x grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 className="font-display text-3xl md:text-4xl leading-tight">
+              DON'T DREAM IT,<br />
+              <span className="text-amber">DRIVE IT!</span>
+            </h2>
+            <p className="mt-5 text-cream/70 max-w-md">
+              Hammad Motors and Rent A Car Pakistan offers the best way to explore Pakistan.
+              Our fleet includes Toyota Land Cruiser, Toyota Revo, Toyota Corolla, Honda Civic,
+              Honda BRV, Audi, Lexus, Range Rover, Rolls-Royce, and more — every car ready to
+              give you a smooth, comfortable ride, whatever your budget or occasion.
+            </p>
+            <button onClick={() => navigate("/cars")} className="btn-primary mt-6 !py-3 !px-7">
+              Browse Fleet
+            </button>
+
+            <div className="mt-10">
+              <p className="text-xs font-semibold tracking-widest uppercase text-cream/50 mb-3">We Accept</p>
+              <div className="flex flex-wrap gap-3">
+                {["Cash", "JazzCash", "EasyPaisa", "Bank Transfer"].map((method) => (
+                  <span
+                    key={method}
+                    className="text-xs font-semibold px-3 py-2 rounded-md bg-cream/10 border border-cream/20"
+                  >
+                    {method}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-0 bg-amber/20 rounded-full blur-3xl" />
+            <img
+              src="https://images.pexels.com/photos/337909/pexels-photo-337909.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Luxury rental car"
+              className="relative rounded-xl w-full h-72 md:h-96 object-cover shadow-2xl"
+            />
+          </div>
         </div>
       </Reveal>
     </div>

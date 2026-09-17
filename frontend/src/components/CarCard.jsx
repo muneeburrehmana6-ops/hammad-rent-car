@@ -24,28 +24,42 @@ const CarCard = ({ car }) => {
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-asphalt">{car.title}</h3>
-          {car.ratingCount > 0 && (
-            <span className="text-xs text-amber-dark font-medium whitespace-nowrap">
-              ★ {car.ratingAverage.toFixed(1)} ({car.ratingCount})
-            </span>
-          )}
-        </div>
-        <p className="text-sm text-asphalt/60 mt-1">
-          {car.category} · {car.transmission} · {car.seats} seats
-        </p>
-        <p className="text-sm text-asphalt/60">{car.location?.city}{car.location?.country ? `, ${car.location.country}` : ""}</p>
-               <div className="mt-3 flex items-center justify-between">
-                    <div>
-            <p className="font-display text-lg">
-              ${toUSD(car.pricePerDay)}
-              <span className="text-xs font-body font-normal text-asphalt/60">/day</span>
-            </p>
-            <p className="text-xs text-asphalt/50">
-              Rs {car.pricePerDay.toLocaleString("en-PK")}/day
-            </p>
+          <div className="text-right shrink-0">
+            <p className="font-display text-base leading-none">Rs {car.pricePerDay.toLocaleString("en-PK")}</p>
+            <p className="text-[11px] text-asphalt/50">/day · ${toUSD(car.pricePerDay)}</p>
           </div>
-          <span className="text-xs text-teal font-medium">View details →</span>
         </div>
+
+        {car.ratingCount > 0 && (
+          <span className="text-xs text-amber-dark font-medium">
+            ★ {car.ratingAverage.toFixed(1)} ({car.ratingCount})
+          </span>
+        )}
+
+        <p className="text-sm text-asphalt/60 mt-1">{car.location?.city}{car.location?.country ? `, ${car.location.country}` : ""}</p>
+
+        {/* Class / Doors / Seats row — matches reference layout */}
+        <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-asphalt/10 text-center">
+          <div>
+            <p className="text-lg leading-none">🚘</p>
+            <p className="text-[10px] text-asphalt/50 mt-1 uppercase tracking-wide">Class</p>
+            <p className="text-xs font-medium">{car.category}</p>
+          </div>
+          <div>
+            <p className="text-lg leading-none">🚪</p>
+            <p className="text-[10px] text-asphalt/50 mt-1 uppercase tracking-wide">Doors</p>
+            <p className="text-xs font-medium">{car.doors || 4}</p>
+          </div>
+          <div>
+            <p className="text-lg leading-none">💺</p>
+            <p className="text-[10px] text-asphalt/50 mt-1 uppercase tracking-wide">Seats</p>
+            <p className="text-xs font-medium">{car.seats}</p>
+          </div>
+        </div>
+
+        <span className="btn-outline w-full mt-4 !py-2 text-sm block text-center">
+          View details
+        </span>
       </div>
     </Link>
   );

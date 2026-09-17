@@ -6,7 +6,7 @@ const Footer = () => (
   <footer className="bg-asphalt text-cream/70 mt-20">
     <div className="container-x py-12 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
       <div>
-        <img src="/logo.png" alt="Hammad Motors and Rent A Car Pakistan" className="h-12 w-auto mb-3" />
+        <p className="font-display text-lg tracking-tight text-amber mb-3">HAMMAD MOTORS</p>
         <p>Hammad Motors and Rent A Car Pakistan — all luxury cars available with driver in all cities of Pakistan.</p>
       </div>
       <div>

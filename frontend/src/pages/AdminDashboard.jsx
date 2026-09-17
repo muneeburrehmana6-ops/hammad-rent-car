@@ -6,7 +6,7 @@ import { COUNTRIES } from "../constants/countries";
 
 const emptyCar = {
   title: "", brand: "", model: "", year: 2023, category: "Sedan", transmission: "Automatic",
-  fuelType: "Petrol", seats: 4, pricePerDay: 50, description: "", features: "",
+  fuelType: "Petrol", seats: 4, doors: 4, pricePerDay: 50, description: "", features: "",
   images: [], country: "Pakistan", city: "", address: "",
 };
 
@@ -72,6 +72,7 @@ const AdminDashboard = () => {
       ...carForm,
       year: Number(carForm.year),
       seats: Number(carForm.seats),
+      doors: Number(carForm.doors),
       pricePerDay: Number(carForm.pricePerDay),
       features: carForm.features.split(",").map((f) => f.trim()).filter(Boolean),
       location: { country: carForm.country, city: carForm.city, address: carForm.address },
@@ -93,7 +94,7 @@ const AdminDashboard = () => {
     setCarForm({
       title: car.title, brand: car.brand, model: car.model, year: car.year,
       category: car.category, transmission: car.transmission, fuelType: car.fuelType,
-      seats: car.seats, pricePerDay: car.pricePerDay, description: car.description || "",
+      seats: car.seats, doors: car.doors || 4, pricePerDay: car.pricePerDay, description: car.description || "",
       features: (car.features || []).join(", "), images: car.images || [],
       country: car.location?.country || "Pakistan", city: car.location?.city || "", address: car.location?.address || "",
     });
@@ -112,7 +113,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="container-x py-10">
-      <Helmet><title>Admin Dashboard | Hammad Rent Car</title></Helmet>
+      <Helmet><title>Admin Dashboard | Hammad Motors and Rent A Car Pakistan</title></Helmet>
 
       <h1 className="font-display text-2xl mb-6">Admin Dashboard</h1>
 
@@ -158,9 +159,10 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-2 gap-2">
               <input className="input-field" type="number" placeholder="Year" name="year" value={carForm.year} onChange={handleCarChange} required />
               <input className="input-field" type="number" placeholder="Seats" name="seats" value={carForm.seats} onChange={handleCarChange} required />
+              <input className="input-field" type="number" placeholder="Doors" name="doors" value={carForm.doors} onChange={handleCarChange} required />
             </div>
             <select className="input-field" name="category" value={carForm.category} onChange={handleCarChange}>
-              {["Economy", "Sedan", "SUV", "Luxury", "Van", "Hatchback"].map((c) => <option key={c}>{c}</option>)}
+              {["Economy", "Sedan", "SUV", "Luxury", "Van", "Hatchback", "Convertible"].map((c) => <option key={c}>{c}</option>)}
             </select>
             <div className="grid grid-cols-2 gap-2">
               <select className="input-field" name="transmission" value={carForm.transmission} onChange={handleCarChange}>

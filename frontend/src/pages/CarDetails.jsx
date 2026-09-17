@@ -7,6 +7,10 @@ import { useAuth } from "../context/AuthContext";
 import ReviewList from "../components/ReviewList";
 import { toUSD } from "../constants/currency";
 
+// Contact numbers used for the "Book via WhatsApp" / "Call Now" buttons.
+const WHATSAPP_NUMBER = import.meta.env.VITE_ADMIN_WHATSAPP || "923338482430";
+const CALL_NUMBER = "923338482430";
+
 const CarDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
@@ -49,7 +53,7 @@ const CarDetails = () => {
   return (
     <div className="container-x py-10">
       <Helmet>
-        <title>{car.title} | Hammad Rent Car</title>
+        <title>{car.title} | Hammad Motors and Rent A Car Pakistan</title>
         <meta name="description" content={`Rent ${car.title} in ${car.location?.city}. ${car.description}`} />
       </Helmet>
 
@@ -66,17 +70,59 @@ const CarDetails = () => {
             <p className="text-amber-dark mt-2">★ {car.ratingAverage.toFixed(1)} ({car.ratingCount} reviews)</p>
           )}
 
-                    <p className="font-display text-3xl mt-4">
+          <p className="font-display text-3xl mt-4">
             ${toUSD(car.pricePerDay)}<span className="text-sm font-body font-normal text-asphalt/60">/day</span>
           </p>
           <p className="text-sm text-asphalt/50 -mt-1">
             Rs {car.pricePerDay.toLocaleString("en-PK")}/day
           </p>
 
+          {/* Technical specifications — Class / Doors / Seats */}
+          <p className="font-semibold text-sm mt-6 mb-3">Technical specifications</p>
+          <div className="grid grid-cols-3 gap-3 text-center">
+            <div className="card py-4">
+              <p className="text-xl leading-none">🚘</p>
+              <p className="text-[10px] text-asphalt/50 mt-1 uppercase tracking-wide">Class</p>
+              <p className="text-sm font-medium">{car.category}</p>
+            </div>
+            <div className="card py-4">
+              <p className="text-xl leading-none">🚪</p>
+              <p className="text-[10px] text-asphalt/50 mt-1 uppercase tracking-wide">Doors</p>
+              <p className="text-sm font-medium">{car.doors || 4}</p>
+            </div>
+            <div className="card py-4">
+              <p className="text-xl leading-none">💺</p>
+              <p className="text-[10px] text-asphalt/50 mt-1 uppercase tracking-wide">Seats</p>
+              <p className="text-sm font-medium">{car.seats}</p>
+            </div>
+          </div>
+
+          {/* Book via WhatsApp / Call — direct contact, no online booking form */}
+          {car.isAvailable ? (
+            <div className="grid grid-cols-2 gap-3 mt-5">
+              <a href={`tel:+${CALL_NUMBER}`} className="btn-outline text-center !py-3">
+                Call Now
+              </a>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                  `Hi! I'd like to book the ${car.title} (Rs ${car.pricePerDay.toLocaleString("en-PK")}/day). Is it available?`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary text-center !py-3"
+              >
+                WhatsApp
+              </a>
+            </div>
+          ) : (
+            <button disabled className="btn-primary mt-5 w-full disabled:opacity-50">
+              Currently Unavailable
+            </button>
+          )}
+
           <div className="grid grid-cols-2 gap-3 mt-6 text-sm">
             <div><span className="text-asphalt/60">Transmission:</span> {car.transmission}</div>
             <div><span className="text-asphalt/60">Fuel:</span> {car.fuelType}</div>
-            <div><span className="text-asphalt/60">Seats:</span> {car.seats}</div>
             <div><span className="text-asphalt/60">Year:</span> {car.year}</div>
           </div>
 
@@ -92,14 +138,6 @@ const CarDetails = () => {
           )}
 
           <p className="mt-4 text-asphalt/80 text-sm">{car.description}</p>
-
-          <button
-            onClick={() => navigate(`/booking/${car._id}`)}
-            disabled={!car.isAvailable}
-            className="btn-primary mt-6 w-full disabled:opacity-50"
-          >
-            {car.isAvailable ? "Book This Car" : "Currently Unavailable"}
-          </button>
 
           {/* Pickup location map */}
           <div className="mt-6">
