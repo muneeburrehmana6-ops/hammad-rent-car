@@ -299,7 +299,7 @@ const Home = () => {
       </div>
 
       {/* Featured cars pulled straight from the database */}
-      <Reveal as="section" className="container-x py-16">
+      <section className="container-x py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
             <span className="text-amber-dark text-xs font-semibold tracking-widest uppercase">Available Now</span>
@@ -337,14 +337,12 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visibleCars.map((car, i) => (
-              <Reveal key={car._id} delay={i * 60}>
-                <CarCard car={car} />
-              </Reveal>
+            {visibleCars.map((car) => (
+              <CarCard key={car._id} car={car} />
             ))}
           </div>
         )}
-      </Reveal>
+      </section>
 
       {/* Highlights */}
       <Reveal as="section" className="bg-asphalt/5 py-16">
