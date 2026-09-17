@@ -18,6 +18,7 @@ router.get("/", async (req, res) => {
       city,
       country,
       category,
+      brand,
       minPrice,
       maxPrice,
       transmission,
@@ -33,6 +34,7 @@ router.get("/", async (req, res) => {
     if (city) query["location.city"] = new RegExp(city, "i");
     if (country) query["location.country"] = country;
     if (category) query.category = category;
+    if (brand) query.brand = new RegExp(`^${brand}$`, "i");
     if (transmission) query.transmission = transmission;
     if (fuelType) query.fuelType = fuelType;
     if (seats) query.seats = { $gte: Number(seats) };
@@ -66,6 +68,17 @@ router.get("/", async (req, res) => {
     }));
 
     res.json({ cars: carsWithStatus, total, page: Number(page), pages: Math.ceil(total / limit) });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @route   GET /api/cars/meta/brands
+// @desc    Distinct brand names across all available cars (for a brand-based browse page)
+router.get("/meta/brands", async (req, res) => {
+  try {
+    const brands = await Car.distinct("brand", { isAvailable: true });
+    res.json(brands.filter(Boolean).sort());
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

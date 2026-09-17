@@ -9,6 +9,7 @@ import ChatWidget from "./components/ChatWidget";
 
 import Home from "./pages/Home";
 import CarListing from "./pages/CarListing";
+import SearchCars from "./pages/SearchCars";
 import CarDetails from "./pages/CarDetails";
 import Booking from "./pages/Booking";
 import Login from "./pages/Login";
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cars" element={<CarListing />} />
+          <Route path="/search" element={<SearchCars />} />
           <Route path="/cars/:id" element={<CarDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

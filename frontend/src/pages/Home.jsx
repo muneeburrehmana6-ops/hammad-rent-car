@@ -206,7 +206,7 @@ const Home = () => {
             </div>
 
             <button
-              onClick={() => navigate("/cars")}
+              onClick={() => navigate("/search")}
               className="btn-primary mt-8 !py-3 !px-7"
             >
               Search Cars
