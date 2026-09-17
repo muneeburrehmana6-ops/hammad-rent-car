@@ -161,8 +161,8 @@ const Home = () => {
         </div>
 
         <div className="relative container-x py-16 md:py-28">
-          <div className="text-cream max-w-2xl">
-            <span className="inline-flex items-center gap-2 font-display text-2xl md:text-3xl text-amber mb-5">
+          <div className="text-cream max-w-2xl mx-auto text-center">
+            <span className="inline-flex items-center justify-center gap-2 font-display text-2xl md:text-3xl text-amber mb-5">
               <LogoMark />
               HAMMAD MOTORS
             </span>
@@ -175,7 +175,7 @@ const Home = () => {
                 {slide.heading}
               </h1>
               {slide.showCta && (
-                <div className="flex flex-wrap gap-3 mt-5">
+                <div className="flex flex-wrap justify-center gap-3 mt-5">
                   <button
                     onClick={() => navigate("/cars")}
                     className="btn-primary !py-2.5 !px-6"
@@ -189,12 +189,12 @@ const Home = () => {
               )}
             </div>
 
-            <p className="mt-5 text-cream/70 max-w-md flex items-center gap-2">
+            <p className="mt-5 text-cream/70 max-w-md mx-auto flex items-center justify-center gap-2">
               <span className="text-amber">★★★★★</span>
               <span>4.9/5 — trusted by 500+ happy customers across Pakistan</span>
             </p>
 
-            <div className="flex gap-6 mt-8 text-sm">
+            <div className="flex justify-center gap-6 mt-8 text-sm">
               <div><span className="font-display text-2xl text-amber">500+</span><p className="text-cream/60">Cars listed</p></div>
               <div><span className="font-display text-2xl text-amber">9</span><p className="text-cream/60">Cities</p></div>
               <div><span className="font-display text-2xl text-amber">24/7</span><p className="text-cream/60">Support</p></div>
