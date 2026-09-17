@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import WhatsAppButton from "./components/WhatsAppButton";
+import ChatWidget from "./components/ChatWidget";
 
 import Home from "./pages/Home";
 import CarListing from "./pages/CarListing";
@@ -55,6 +56,7 @@ function App() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <ChatWidget />
     </div>
   );
 }

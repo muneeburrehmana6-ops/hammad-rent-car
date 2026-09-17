@@ -57,28 +57,28 @@ const FLEET_CATEGORIES = [
 
 const STEPS = [
   {
-    icon: "📍",
-    title: "Date & Location",
-    desc: "Pick the location and the needed rent date.",
-    more: "Choose your pickup city and the exact dates you need the car — we serve every major city across Pakistan.",
-  },
-  {
     icon: "🚘",
-    title: "Choose A Car",
-    desc: "Select the vehicle using our fleet.",
-    more: "Browse economy, SUV, and luxury vehicles — each listing shows real photos, seats, and transparent pricing in PKR & USD.",
+    title: "Browse Our Fleet",
+    desc: "Pick a category or search for the car you need.",
+    more: "Explore economy, sedan, SUV, luxury, van and convertible cars — every listing shows real photos, seats, doors and transparent pricing in PKR & USD.",
   },
   {
     icon: "📋",
-    title: "Make A Booking",
-    desc: "Enter your details and confirm.",
-    more: "Fill in your pickup/drop-off details and confirm — you'll get a booking confirmation and our team will reach out to finalize.",
+    title: "Check Car Details",
+    desc: "View class, doors, seats & price per day.",
+    more: "Open any car's details page to see its specifications, features, and pickup location before you decide.",
+  },
+  {
+    icon: "💬",
+    title: "Contact Us",
+    desc: "Tap Call Now or WhatsApp to confirm.",
+    more: "Message us on WhatsApp or call directly from the car's page — we'll confirm availability, dates and pickup details with you personally.",
   },
   {
     icon: "🏁",
     title: "Enjoy Your Ride!",
     desc: "Sit back and enjoy the journey.",
-    more: "Your driver (if selected) and car will be ready at the agreed time and place — just relax and enjoy the ride.",
+    more: "Your car (and driver, if requested) will be ready at the agreed time and place — just relax and enjoy the ride.",
   },
 ];
 
@@ -86,24 +86,29 @@ const Home = () => {
   const navigate = useNavigate();
   const [featuredCars, setFeaturedCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const videoRef = useRef(null);
   const [slideIndex, setSlideIndex] = useState(0);
   const [openStep, setOpenStep] = useState(null);
   const [activeCategory, setActiveCategory] = useState(0);
 
-  useEffect(() => {
-    const fetchFeatured = async () => {
-      try {
-        const { data } = await api.get("/cars", { params: { limit: 30 } });
-        setFeaturedCars(data.cars);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFeatured();
+  const fetchFeatured = React.useCallback(async () => {
+    setLoading(true);
+    setLoadError(false);
+    try {
+      const { data } = await api.get("/cars", { params: { limit: 30 } });
+      setFeaturedCars(data.cars);
+    } catch (err) {
+      console.error(err);
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchFeatured();
+  }, [fetchFeatured]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -295,7 +300,24 @@ const Home = () => {
         </div>
 
         {loading ? (
-          <p className="text-asphalt/60">Loading cars...</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="card overflow-hidden animate-pulse">
+                <div className="aspect-[4/3] bg-asphalt/10" />
+                <div className="p-4 space-y-2">
+                  <div className="h-4 bg-asphalt/10 rounded w-3/4" />
+                  <div className="h-3 bg-asphalt/10 rounded w-1/2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : loadError ? (
+          <div className="card p-10 text-center text-asphalt/60">
+            <p>Couldn't load cars right now — the server might still be waking up.</p>
+            <button onClick={fetchFeatured} className="btn-outline mt-4 !py-2 !px-5">
+              Try Again
+            </button>
+          </div>
         ) : visibleCars.length === 0 ? (
           <div className="card p-10 text-center text-asphalt/60">
             {featuredCars.length === 0
