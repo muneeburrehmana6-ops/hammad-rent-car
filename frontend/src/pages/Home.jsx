@@ -88,6 +88,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const videoRef = useRef(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
   const [openStep, setOpenStep] = useState(null);
   const [activeCategory, setActiveCategory] = useState(0);
@@ -145,16 +146,26 @@ const Home = () => {
       {/* Hero with background video */}
       <section className="relative overflow-hidden bg-asphalt">
         <div className="absolute inset-0 h-[520px] md:h-full">
+          {/* Poster fades out smoothly once the video actually starts playing,
+              instead of an abrupt swap from image to video. */}
+          <img
+            src={HERO_POSTER}
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              videoPlaying ? "opacity-0" : "opacity-100"
+            }`}
+          />
           <video
             ref={videoRef}
             className="w-full h-full object-cover"
             src={HERO_VIDEO_URL}
-            poster={HERO_POSTER}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
+            onPlaying={() => setVideoPlaying(true)}
           />
           {/* Dark gradient overlay for readability + luxury feel */}
           <div className="absolute inset-0 bg-gradient-to-b from-asphalt/90 via-asphalt/80 to-asphalt" />
