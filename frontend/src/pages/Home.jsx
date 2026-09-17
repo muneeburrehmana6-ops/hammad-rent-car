@@ -146,19 +146,13 @@ const Home = () => {
       {/* Hero with background video */}
       <section className="relative overflow-hidden bg-asphalt">
         <div className="absolute inset-0 h-[520px] md:h-full">
-          {/* Poster fades out smoothly once the video actually starts playing,
-              instead of an abrupt swap from image to video. */}
-          <img
-            src={HERO_POSTER}
-            alt=""
-            aria-hidden="true"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-              videoPlaying ? "opacity-0" : "opacity-100"
-            }`}
-          />
+          {/* No poster image — just the dark background until the video is
+              ready, then the video fades in. No mismatched photo flash. */}
           <video
             ref={videoRef}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover transition-opacity duration-700 ${
+              videoPlaying ? "opacity-100" : "opacity-0"
+            }`}
             src={HERO_VIDEO_URL}
             autoPlay
             muted
