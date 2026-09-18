@@ -7,24 +7,6 @@ import NotificationBell from "./NotificationBell";
 const PHONE_NUMBER = "0333-8482430";
 const PHONE_TEL = "+923338482430";
 
-// Simple inline SVG car-silhouette mark — no heavy image file needed.
-const LogoMark = () => (
-  <svg viewBox="0 0 48 24" className="h-6 w-12" fill="none">
-    <path
-      d="M2 15c3-6 8-10 14-10h10c5 0 9 3 12 7l6 1"
-      stroke="#E8A33D"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M4 16h38c1 0 2-1 2-2v-1c0-1-1-2-2-2l-4-1c-2-3-5-5-9-5H16c-4 0-8 3-10 7l-2 2v2z"
-      fill="#F3F1EC"
-    />
-    <circle cx="12" cy="17" r="2.5" fill="#14181C" />
-    <circle cx="36" cy="17" r="2.5" fill="#14181C" />
-  </svg>
-);
-
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
   const [open, setOpen] = useState(false);
@@ -45,11 +27,8 @@ const Navbar = () => {
   return (
     <header className="bg-asphalt text-cream sticky top-0 z-50">
       <div className="container-x flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <LogoMark />
-          <span className="font-display text-base md:text-lg tracking-tight text-amber leading-none">
-            HAMMAD MOTORS
-          </span>
+        <Link to="/" className="flex items-center shrink-0">
+          <img src="/logo.png" alt="Hammad Motors and Rent A Car Pakistan" className="h-12 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">

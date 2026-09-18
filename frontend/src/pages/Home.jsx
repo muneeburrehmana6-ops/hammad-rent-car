@@ -8,24 +8,6 @@ import Reveal from "../components/Reveal";
 
 const PHONE_TEL = "+923338482430";
 
-// Same inline SVG car-silhouette mark used in the Navbar/Footer.
-const LogoMark = () => (
-  <svg viewBox="0 0 48 24" className="h-8 w-16" fill="none">
-    <path
-      d="M2 15c3-6 8-10 14-10h10c5 0 9 3 12 7l6 1"
-      stroke="#E8A33D"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M4 16h38c1 0 2-1 2-2v-1c0-1-1-2-2-2l-4-1c-2-3-5-5-9-5H16c-4 0-8 3-10 7l-2 2v2z"
-      fill="#F3F1EC"
-    />
-    <circle cx="12" cy="17" r="2.5" fill="#14181C" />
-    <circle cx="36" cy="17" r="2.5" fill="#14181C" />
-  </svg>
-);
-
 // Public domain / royalty-free sample car driving video.
 // Swap this URL for your own hosted video any time — just change HERO_VIDEO_URL.
 const HERO_VIDEO_URL = "/hero-car.mp4";
@@ -167,10 +149,7 @@ const Home = () => {
 
         <div className="relative container-x py-16 md:py-28">
           <div className="text-cream max-w-2xl mx-auto text-center">
-            <span className="inline-flex items-center justify-center gap-2 font-display text-2xl md:text-3xl text-amber mb-5">
-              <LogoMark />
-              HAMMAD MOTORS
-            </span>
+            <img src="/logo.png" alt="Hammad Motors and Rent A Car Pakistan" className="h-16 md:h-20 w-auto mx-auto mb-5" />
 
             <div key={slideIndex} className="animate-fadeInUp">
               <span className="inline-block text-amber text-xs font-semibold tracking-widest uppercase mb-3">
